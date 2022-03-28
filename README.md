@@ -6,6 +6,8 @@
 + ### [원격 저장소 내려 받기](#클라우드-저장소-원격-저장소-내려받기)
 + ### [변경 사항 반영](#변경-사항-반영-1)
 + ### [원격 저장소의 변경 사항 내려 받기](#클라우드-저장소-원격-저장소-의-변경-사항-내려-받기)
++ ### [커밋 히스토리 조회하기](#커밋-히스토리-조회하기-1)
++ ### [이미 push한 commit message 수정하기](#이미-push한-commit-message-수정하기-1)
 
 
 ## 기본 명렁어
@@ -145,3 +147,36 @@
         <내가 사용했던 log 명령어>
         git log --pretty=format:"%H" -1   // 가장 최근 CommitID 하나만 출력함
       </pre>
+
++ ## 이미 Push한 Commit message 수정하기
+  + ### 협업을 진행하는 Repo에서 사용하는 것은 추천하지 않는다.<br>(과정 중 마지막에 --force 옵션으로 로컬 저장소를 원격 저장소에 강제로 push 해서)
+    ### 1. rebase 명령어로 에디터 상태 만듦
+    <pre>
+      git rebase HEAD~1 -i  // 숫자는 본인이 수정하고 싶은 Commit이 몇번째에 있는지 고려해서 넣으면 됨.
+    </pre>
+    
+    ### 2. 수정하려는 Commit의 맨 앞에 pick을 reword로 수정
+    <pre>
+      <예시>
+      pick 1a2b3c Update files    ->    reword 1a2b3c Update files
+      
+      키워드 수정 후 
+      1. ESC키 누름
+      2. ':wq!' 입력 후 엔터
+    </pre>
+    
+    ### 3. 수정하려는 Commit Message로 수정
+    <pre>
+      Commit Message 수정 후
+      1. ESC키 누름
+      2. ':wq!' 입력 후 엔터
+    </pre>
+    
+    ### 4. 로컬 저장소의 변경 사항 원격 저장소에 강제로 반영
+    <pre>
+      git push -f                     // default 브렌치에 반영하는 경우
+      git push -f origin [브렌치 이름] // 원하는 브렌치에 반영하는 경우
+      
+      <예시>
+      git push -f origin main
+    </pre>
